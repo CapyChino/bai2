@@ -1,16 +1,13 @@
 :root {
     --primary: #0e7490;
-    --primary-dark: #155e75;
+    --primary-dark: #164e63;
     --accent: #14b8a6;
     --text: #1f2937;
     --subtext: #475569;
     --border: #e2e8f0;
-    --bg-grad-1: #e6f2f4;
-    --bg-grad-2: #f7fbfc;
     --card: #ffffff;
-    --chip: #f3f9fa;
-    --shadow: 0 12px 32px rgba(14, 116, 144, 0.12);
-    --radius: 16px;
+    --shadow: 0 24px 60px rgba(13, 84, 105, 0.22);
+    --radius-lg: 22px;
 }
 
 *, *::before, *::after {
@@ -23,54 +20,98 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     color: var(--text);
     line-height: 1.45;
-    min-height: 100vh;
-    padding: 40px 20px;
-    background: linear-gradient(160deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 50%, #eef6f8 100%);
+    min-height: 100svh;
+    display: flex;
+    padding: 48px 20px;
+    background:
+        radial-gradient(1200px 600px at 85% -10%, rgba(20, 184, 166, 0.20), transparent 60%),
+        radial-gradient(1000px 520px at -10% 110%, rgba(14, 116, 144, 0.18), transparent 60%),
+        linear-gradient(160deg, #dceef1 0%, #f3f9fa 55%, #e8f3f5 100%);
 }
 
+/* Blobs mờ lơ lửng phía sau card */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+body::before {
+    width: 420px;
+    height: 420px;
+    background: rgba(20, 184, 166, 0.20);
+    top: -140px;
+    right: -100px;
+}
+
+body::after {
+    width: 400px;
+    height: 400px;
+    background: rgba(14, 116, 144, 0.18);
+    bottom: -140px;
+    left: -110px;
+}
+
+/* ===== Card center dọc + ngang ===== */
 .survey-container {
-    max-width: 1080px;
-    margin: 0 auto;
+    margin: auto;
+    width: 100%;
+    max-width: 980px;
 }
 
-/* ===== Header ===== */
+.survey-card {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    animation: rise 0.5s ease both;
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ===== Hero band ===== */
 .hero {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
+    padding: 30px 42px;
+    background: linear-gradient(135deg, var(--primary) 0%, #0f766e 55%, var(--accent) 100%);
+    color: #fff;
 }
 
 .logo {
-    height: 84px;
-    width: auto;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+    height: 68px;
+    width: 68px;
+    object-fit: cover;
+    border-radius: 16px;
     background: #fff;
-    padding: 6px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .hero h1 {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
-    letter-spacing: -0.5px;
-    color: var(--primary-dark);
-    margin-bottom: 4px;
+    letter-spacing: -0.4px;
+    margin-bottom: 2px;
 }
 
 .intro-text {
     font-size: 14.5px;
-    color: var(--subtext);
+    color: rgba(255, 255, 255, 0.88);
 }
 
-/* ===== Form card ===== */
-.survey-card {
-    background: var(--card);
-    border: 1px solid #eef2f3;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 38px 42px;
+/* ===== Form body ===== */
+.form-body {
+    padding: 34px 42px 38px;
 }
 
 .form-grid {
@@ -93,9 +134,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.8px;
     color: var(--primary);
-    margin-bottom: 2px;
-    position: relative;
     padding-bottom: 10px;
+    position: relative;
 }
 
 .form-section h2::after {
@@ -103,8 +143,8 @@ body {
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 2px;
     width: 42px;
+    height: 2px;
     background: linear-gradient(90deg, var(--primary), var(--accent));
     border-radius: 2px;
 }
@@ -126,7 +166,8 @@ body {
     margin-bottom: 0;
 }
 
-.input-group label {
+.input-group label,
+.contact-method label {
     font-size: 13px;
     font-weight: 600;
     color: #334155;
@@ -136,13 +177,13 @@ body {
 .input-group input,
 .contact-method select {
     width: 100%;
-    padding: 11px 14px;
-    font-size: 14px;
+    padding: 12px 15px;
+    font-size: 14.5px;
     font-family: inherit;
     color: var(--text);
-    background: #fafcfc;
+    background: #f8fafb;
     border: 1.5px solid var(--border);
-    border-radius: 10px;
+    border-radius: 11px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
@@ -155,19 +196,11 @@ body {
     outline: none;
     border-color: var(--primary);
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.12);
+    box-shadow: 0 0 0 3.5px rgba(14, 116, 144, 0.13);
 }
 
 input[type="date"] {
     color-scheme: light;
-}
-
-.contact-method label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #334155;
-    margin-bottom: 6px;
 }
 
 /* ===== Radio & checkbox chips ===== */
@@ -185,12 +218,14 @@ input[type="date"] {
     gap: 10px;
     padding: 12px 14px;
     font-size: 14px;
+    font-weight: 500;
     color: #334155;
-    background: var(--chip);
+    background: #f8fafb;
     border: 1.5px solid var(--border);
-    border-radius: 10px;
+    border-radius: 11px;
     cursor: pointer;
-    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    transition: border-color 0.15s ease, background 0.15s ease,
+                transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 }
 
 .radio-group label:hover,
@@ -199,11 +234,14 @@ input[type="date"] {
     transform: translateY(-1px);
 }
 
+/* Chip được chọn: gradient + chữ trắng */
 .radio-group label:has(input:checked),
 .checkbox-group label:has(input:checked) {
-    background: #e4f3f4;
-    border-color: var(--primary);
-    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-color: transparent;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 16px rgba(14, 116, 144, 0.28);
 }
 
 .checkbox-group {
@@ -215,6 +253,7 @@ input[type="date"] {
 
 .checkbox-group label {
     line-height: 1.5;
+    align-items: flex-start;
 }
 
 input[type="radio"],
@@ -224,10 +263,7 @@ input[type="checkbox"] {
     flex-shrink: 0;
     accent-color: var(--primary);
     cursor: pointer;
-}
-
-input[type="radio"] {
-    border-radius: 50%;
+    margin-top: 1px;
 }
 
 /* ===== Submit ===== */
@@ -236,31 +272,34 @@ input[type="radio"] {
     padding-top: 26px;
     border-top: 1px solid #eef2f3;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .submit-btn {
-    padding: 13px 36px;
-    font-size: 15px;
-    font-weight: 600;
+    min-width: 240px;
+    padding: 14px 40px;
+    font-size: 15.5px;
+    font-weight: 700;
     font-family: inherit;
+    letter-spacing: 0.2px;
     color: #fff;
     background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(14, 116, 144, 0.28);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 10px 24px rgba(14, 116, 144, 0.32);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(14, 116, 144, 0.34);
+    box-shadow: 0 14px 30px rgba(14, 116, 144, 0.40);
+    filter: brightness(1.05);
 }
 
 .submit-btn:active {
     transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(14, 116, 144, 0.24);
+    box-shadow: 0 6px 14px rgba(14, 116, 144, 0.26);
 }
 
 /* ===== Result page (thanks.jsp) ===== */
@@ -287,23 +326,19 @@ input[type="radio"] {
     padding-left: 20px;
 }
 
-.badge {
-    margin-left: auto;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--primary);
-    background: #e4f3f4;
-    padding: 6px 12px;
-    border-radius: 999px;
-}
-
 /* ===== Responsive ===== */
 @media (max-width: 760px) {
     body {
         padding: 24px 12px;
     }
 
-    .survey-card {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 26px 20px;
+    }
+
+    .form-body {
         padding: 26px 20px;
     }
 
@@ -316,11 +351,8 @@ input[type="radio"] {
         grid-template-columns: 1fr;
     }
 
-    .submit-row {
-        justify-content: stretch;
-    }
-
     .submit-btn {
         width: 100%;
+        min-width: 0;
     }
 }
