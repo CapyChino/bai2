@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Murach Survey</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main.css?v=4">
 </head>
 <body>
     <main class="survey-container">
@@ -40,8 +40,16 @@
                                 <input type="email" id="email" name="email" placeholder="you@example.com" required>
                             </div>
                             <div class="input-group">
-                                <label for="dob">Date of Birth</label>
-                                <input type="date" id="dob" name="dob">
+                                <label for="dobYear">Date of Birth</label>
+                                <div class="dob-row">
+                                    <input type="number" id="dobDay" name="dobDay" class="dob-input"
+                                           min="1" max="31" placeholder="Ngày">
+                                    <input type="number" id="dobMonth" name="dobMonth" class="dob-input"
+                                           min="1" max="12" placeholder="Tháng">
+                                    <input type="number" id="dobYear" name="dobYear" class="dob-input dob-year"
+                                           min="1900" max="2026" placeholder="Năm">
+                                </div>
+                                <input type="hidden" name="dob" id="dob">
                             </div>
                         </section>
 
@@ -85,6 +93,22 @@
                     <button type="submit" class="submit-btn">Submit Survey</button>
                 </div>
             </form>
+
+            <script>
+                // Ghép ngày/tháng/năm thành dob (YYYY-MM-DD) như input type="date" cũ
+                (function () {
+                    var ids = ['dobDay', 'dobMonth', 'dobYear'];
+                    var inputs = ids.map(function (id) { return document.getElementById(id); });
+                    var dob = document.getElementById('dob');
+                    function sync() {
+                        var v = ids.map(function (_, i) { return inputs[i].value; });
+                        dob.value = v[0] && v[1] && v[2]
+                            ? v[2].padStart(4, '0') + '-' + v[1].padStart(2, '0') + '-' + v[0].padStart(2, '0')
+                            : '';
+                    }
+                    inputs.forEach(function (i) { i.addEventListener('input', sync); });
+                })();
+            </script>
         </div>
     </main>
 </body>

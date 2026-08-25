@@ -205,19 +205,6 @@ input[type="date"] {
     color-scheme: light;
 }
 
-.dob-row {
-    display: flex;
-    gap: 10px;
-}
-
-.dob-row .dob-input {
-    flex: 1;
-}
-
-.dob-row .dob-year {
-    flex: 1.5;
-}
-
 /* ===== Radio & checkbox chips ===== */
 .radio-group {
     display: grid;
